@@ -1,28 +1,135 @@
 #include <iostream>
 #include <ctime>
+#include <chrono>
+#include <thread>
 
 using namespace std;
 
-const short cells = 9;
-short emptyCell = cells;
+class MemeTicTacToe
+{
+    private:
 
+    const short cells = 9;
+    short emptyCells = cells;
 
-    void Print(char *arr2)
+    short userPlace, botPlace;
+    short userSymbol;
+
+    short round = 1;
+
+    char grid[9]; //cells
+    char userChar, botChar;
+
+    bool exit = false;
+    bool endOfRound = false;
+
+    public:
+
+    bool GetExit()
+    {
+        return exit;
+    }
+
+    bool GetEndOfRound()
+    {
+        return endOfRound;
+    }
+
+    void Greetings()
+    {
+        cout << "##### Мемные Крестики-Нолики #####\n";
+        cout << "Разработчик: Terrakllee\n\n";
+    }
+
+    void Print()
     {
         cout << "\n";
-        cout << " " << arr2[0] << " ┃ " << arr2[1] << " ┃ "  << arr2[2] << " \n";
+        cout << " " << grid[0] << " ┃ " << grid[1] << " ┃ "  << grid[2] << " \n";
         cout << "━━━╋━━━╋━━━\n";
-        cout << " " << arr2[3] << " ┃ " << arr2[4] << " ┃ "  << arr2[5] << " \n";
+        cout << " " << grid[3] << " ┃ " << grid[4] << " ┃ "  << grid[5] << " \n";
         cout << "━━━╋━━━╋━━━\n";
-        cout << " " << arr2[6] << " ┃ " << arr2[7] << " ┃ "  << arr2[8] << " \n";
+        cout << " " << grid[6] << " ┃ " << grid[7] << " ┃ "  << grid[8] << " \n";
         cout << "\n";
-    };
+    }
 
-    void EndOfRound(bool *exit, short *round, bool *endOfRound)
+    void StartRound()
     {
-        emptyCell = cells;
+        endOfRound = false;
+        emptyCells = cells;
+
+        for (int i = 0; i < cells; i++)
+        {
+            grid[i] = ' ';
+        }
+
+        cout << "Раунд № " << round << "\n";
+        cout << " *Если вы хотите играть за X введите цифру 1 \n *Если вы хотите играть за O введите цифру 0\n *Ваш ввод: ";
+
+        do
+        {
+            cin >> userSymbol;
+        } while (userSymbol != 1 && userSymbol != 0);
+        
+        
+        
+
+        if (userSymbol == 1)
+        {
+            userChar = 'X';
+            botChar = 'O';
+        }
+        else if (userSymbol == 0)
+        {
+            userChar = 'O';
+            botChar = 'X';
+        }
+
+        Print();
+    }
+
+    void UserTurn()
+    {
+        cout << "Ваш ход: ";
+
+        do
+        {
+            cin >> userPlace;
+        } while (userPlace < 1 || userPlace > 9 || grid[userPlace-1] != ' ');
+
+        grid[userPlace-1] = userChar;
+        emptyCells--;
+
+        Print();
+    }
+
+    void BotTurn()
+    {
+        cout << "Бот думает.";
+        cout.flush();
+        this_thread::sleep_for(chrono::seconds(1));
+        cout << ".";
+        cout.flush();
+        this_thread::sleep_for(chrono::seconds(1));
+        cout << ".\n";
+
+
+        do
+        {
+            botPlace = rand() % 9;
+        } while (grid[botPlace] != ' ');
+
+        grid[botPlace] = botChar;
+        emptyCells--;
+
+        Print();
+    }
+
+    void EndOfRound(bool *exit, short *round, bool *endOfRound) 
+    {
+        emptyCells = cells;
         cout << " *Если хотите выйти из игры введите цифру 1\n *Если хотите ещё раунд введите цифру 0\n *Ваш ввод: ";
         cin >> *exit;
+
         if (*exit != 1)
         {
             (*round)++;
@@ -91,536 +198,266 @@ short emptyCell = cells;
         cout << "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠀⠀⠀⠀⠀\n";
         cout << "\n\n";
     }
+
+
+    void CheckUserWin()
+    {
+        //Row wins USER
+        if (grid[0] == grid[1] && grid[1] == grid[2] && grid[2] == userChar)
+        {
+            grid[0] = '#';
+            grid[1] = '#';
+            grid[2] = '#';
+
+            Print();
+            YouWin();
+            EndOfRound(&exit, &round, &endOfRound);
+        }
+
+        if (grid[3] == grid[4] && grid[4] == grid[5] && grid[5] == userChar)
+        {
+            grid[3] = '#';
+            grid[4] = '#';
+            grid[5] = '#';
+
+            Print();
+            YouWin();
+            EndOfRound(&exit, &round, &endOfRound);
+        }
+
+        if (grid[6] == grid[7] && grid[7] == grid[8] && grid[8] == userChar)
+        {
+            grid[6] = '#';
+            grid[7] = '#';
+            grid[8] = '#';
+
+            Print();
+            YouWin();
+            EndOfRound(&exit, &round, &endOfRound);
+        }
+
+        //Col wins USER
+        if (grid[0] == grid[3] && grid[3] == grid[6] && grid[6] == userChar)
+        {
+            grid[0] = '#';
+            grid[3] = '#';
+            grid[6] = '#';
+
+            Print();
+            YouWin();
+            EndOfRound(&exit, &round, &endOfRound);
+        }
+
+        if (grid[1] == grid[4] && grid[4] == grid[7] && grid[7] == userChar)
+        {
+            grid[1] = '#';
+            grid[4] = '#';
+            grid[7] = '#';
+
+            Print();
+            YouWin();
+            EndOfRound(&exit, &round, &endOfRound);
+        }
+
+        if (grid[2] == grid[5] && grid[5] == grid[8] && grid[8] == userChar)
+        {
+            grid[2] = '#';
+            grid[5] = '#';
+            grid[8] = '#';
+
+            Print();
+            YouWin();
+            EndOfRound(&exit, &round, &endOfRound);
+        }
+
+        //Axis wins USER
+        if (grid[0] == grid[4] && grid[4] == grid[8] && grid[8] == userChar)
+        {
+            grid[0] = '#';
+            grid[4] = '#';
+            grid[8] = '#';
+
+            Print();
+            YouWin();
+            EndOfRound(&exit, &round, &endOfRound);
+        }
+
+        if (grid[2] == grid[4] && grid[4] == grid[6] && grid[6] == userChar)
+        {
+            grid[2] = '#';
+            grid[4] = '#';
+            grid[6] = '#';
+
+            Print();
+            YouWin();
+            EndOfRound(&exit, &round, &endOfRound);
+        }
+    }
+
     
+    ///////////////////////////////////////
+
+
+    void CheckBotWin()
+    {
+        //Row wins BOT
+        if (grid[0] == grid[1] && grid[1] == grid[2] && grid[2] == botChar)
+        {
+            grid[0] = '#';
+            grid[1] = '#';
+            grid[2] = '#';
+
+            Print();
+            YouLose();
+            EndOfRound(&exit, &round, &endOfRound);
+        }
+
+        if (grid[3] == grid[4] && grid[4] == grid[5] && grid[5] == botChar)
+        {
+            grid[3] = '#';
+            grid[4] = '#';
+            grid[5] = '#';
+
+            Print();
+            YouLose();
+            EndOfRound(&exit, &round, &endOfRound);
+        }
+
+        if (grid[6] == grid[7] && grid[7] == grid[8] && grid[8] == botChar)
+        {
+            grid[6] = '#';
+            grid[7] = '#';
+            grid[8] = '#';
+
+            Print();
+            YouLose();
+            EndOfRound(&exit, &round, &endOfRound);
+        }
+
+        //Col wins BOT
+        if (grid[0] == grid[3] && grid[3] == grid[6] && grid[6] == botChar)
+        {
+            grid[0] = '#';
+            grid[3] = '#';
+            grid[6] = '#';
+
+            Print();
+            YouLose();
+            EndOfRound(&exit, &round, &endOfRound);
+        }
+
+        if (grid[1] == grid[4] && grid[4] == grid[7] && grid[7] == botChar)
+        {
+            grid[1] = '#';
+            grid[4] = '#';
+            grid[7] = '#';
+
+            Print();
+            YouLose();
+            EndOfRound(&exit, &round, &endOfRound);
+        }
+
+        if (grid[2] == grid[5] && grid[5] == grid[8] && grid[8] == botChar)
+        {
+            grid[2] = '#';
+            grid[5] = '#';
+            grid[8] = '#';
+
+            Print();
+            YouLose();
+            EndOfRound(&exit, &round, &endOfRound);
+        }
+
+        //Axis wins BOT
+        if (grid[0] == grid[4] && grid[4] == grid[8] && grid[8] == botChar)
+        {
+            grid[0] = '#';
+            grid[4] = '#';
+            grid[8] = '#';
+
+            Print();
+            YouLose();
+            EndOfRound(&exit, &round, &endOfRound);
+        }
+
+        if (grid[2] == grid[4] && grid[4] == grid[6] && grid[6] == botChar)
+        {
+            grid[2] = '#';
+            grid[4] = '#';
+            grid[6] = '#';
+
+            Print();
+            YouLose();
+            EndOfRound(&exit, &round, &endOfRound);
+        }
+    }
+
+    /////////////////////////////////////////////
+
+    void CheckDraw()
+    {
+        //Draw
+        if (emptyCells == 0)
+        {
+            emptyCells = cells;
+            Draw();
+            EndOfRound(&exit, &round, &endOfRound);
+        }
+    }
+
+    ///////////////////////////////////////////////////
+
+    void Play()
+    {
+        Greetings();
+        do
+        {
+            StartRound();
+            do
+            {
+                UserTurn();
+
+                CheckUserWin();
+                if (endOfRound == true){ continue; }
+
+                CheckBotWin();
+                if (endOfRound == true){ continue; }
+
+                CheckDraw();
+                if (endOfRound == true){ continue; }
+
+                if (exit == 1)
+                {
+                    break;
+                }
+                
+                BotTurn();
+
+                CheckUserWin();
+                if (endOfRound == true){ continue; }
+
+                CheckBotWin();
+                if (endOfRound == true){ continue; }
+
+                CheckDraw();
+                if (endOfRound == true){ continue; }
+
+            } while (endOfRound != true);
+
+        } while (exit != true);
+
+    }
+
+};
 
 
 int main()
 {
-    setlocale(0, "");
+    setlocale(LC_ALL, "ru_RU.UTF-8");
     srand(time(nullptr));
 
-    
+    MemeTicTacToe A1;
 
-
-    short userPlace, botPlace;
-    bool userSymbol;
-
-
-    short round = 1;
-
-    char arr2[cells];
-    char userChar, botChar;
-
-    bool exit = false;
-    bool endOfRound = false;
-
-    for (int i = 0; i < cells; i++)
-    {
-        arr2[i] = ' ';
-    }
-    
-    cout << "##### Игра Крестики-Нолики #####\n";
-    cout << "Разработчик: Terrakllee\n\n";
-
-    
-    do
-    {
-        endOfRound = false;
-        emptyCell = cells;
-
-        for (int i = 0; i < cells; i++)
-        {
-            arr2[i] = ' ';
-        }
-
-        cout << "Раунд № " << round << "\n";
-        cout << " *Если вы хотите играть за X введите цифру 1 \n *Если вы хотите играть за O введите цифру 0\n *Ваш ввод: ";
-        cin >> userSymbol;
-        
-
-        if (userSymbol == true)
-        {
-            userChar = 'X';
-            botChar = 'O';
-        }
-        else if (userSymbol == false)
-        {
-            userChar = 'O';
-            botChar = 'X';
-        }
-
-        Print(arr2);
-
-        do
-        {
-            cout << "Ваш ход: ";
-
-            do
-            {
-                cin >> userPlace;
-            } while (userPlace < 1 || userPlace > 9 || arr2[userPlace-1] != ' ');
-
-            cout << "\n";
-
-            arr2[userPlace-1] = userChar;
-            emptyCell--;
-
-            Print(arr2);
-
-            //Row wins USER
-            if (arr2[0] == arr2[1] && arr2[1] == arr2[2] && arr2[2] == userChar)
-            {
-                arr2[0] = '#';
-                arr2[1] = '#';
-                arr2[2] = '#';
-
-                Print(arr2);
-                YouWin();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            if (arr2[3] == arr2[4] && arr2[4] == arr2[5] && arr2[5] == userChar)
-            {
-                arr2[3] = '#';
-                arr2[4] = '#';
-                arr2[5] = '#';
-
-                Print(arr2);
-                YouWin();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            if (arr2[6] == arr2[7] && arr2[7] == arr2[8] && arr2[8] == userChar)
-            {
-                arr2[6] = '#';
-                arr2[7] = '#';
-                arr2[8] = '#';
-
-                Print(arr2);
-                YouWin();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            //Col wins USER
-            if (arr2[0] == arr2[3] && arr2[3] == arr2[6] && arr2[6] == userChar)
-            {
-                arr2[0] = '#';
-                arr2[3] = '#';
-                arr2[6] = '#';
-
-                Print(arr2);
-                YouWin();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            if (arr2[1] == arr2[4] && arr2[4] == arr2[7] && arr2[7] == userChar)
-            {
-                arr2[1] = '#';
-                arr2[4] = '#';
-                arr2[7] = '#';
-
-                Print(arr2);
-                YouWin();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            if (arr2[2] == arr2[5] && arr2[5] == arr2[8] && arr2[8] == userChar)
-            {
-                arr2[2] = '#';
-                arr2[5] = '#';
-                arr2[8] = '#';
-
-                Print(arr2);
-                YouWin();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            //Axis wins USER
-            if (arr2[0] == arr2[4] && arr2[4] == arr2[8] && arr2[8] == userChar)
-            {
-                arr2[0] = '#';
-                arr2[4] = '#';
-                arr2[8] = '#';
-
-                Print(arr2);
-                YouWin();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            if (arr2[2] == arr2[4] && arr2[4] == arr2[6] && arr2[6] == userChar)
-            {
-                arr2[2] = '#';
-                arr2[4] = '#';
-                arr2[6] = '#';
-
-                Print(arr2);
-                YouWin();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-
-
-
-            //Row wins BOT
-            if (arr2[0] == arr2[1] && arr2[1] == arr2[2] && arr2[2] == botChar)
-            {
-                arr2[0] = '#';
-                arr2[1] = '#';
-                arr2[2] = '#';
-
-                Print(arr2);
-                YouLose();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            if (arr2[3] == arr2[4] && arr2[4] == arr2[5] && arr2[5] == botChar)
-            {
-                arr2[3] = '#';
-                arr2[4] = '#';
-                arr2[5] = '#';
-
-                Print(arr2);
-                YouLose();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            if (arr2[6] == arr2[7] && arr2[7] == arr2[8] && arr2[8] == botChar)
-            {
-                arr2[6] = '#';
-                arr2[7] = '#';
-                arr2[8] = '#';
-
-                Print(arr2);
-                YouLose();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            //Col wins BOT
-            if (arr2[0] == arr2[3] && arr2[3] == arr2[6] && arr2[6] == botChar)
-            {
-                arr2[0] = '#';
-                arr2[3] = '#';
-                arr2[6] = '#';
-
-                Print(arr2);
-                YouLose();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            if (arr2[1] == arr2[4] && arr2[4] == arr2[7] && arr2[7] == botChar)
-            {
-                arr2[1] = '#';
-                arr2[4] = '#';
-                arr2[7] = '#';
-
-                Print(arr2);
-                YouLose();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            if (arr2[2] == arr2[5] && arr2[5] == arr2[8] && arr2[8] == botChar)
-            {
-                arr2[2] = '#';
-                arr2[5] = '#';
-                arr2[8] = '#';
-
-                Print(arr2);
-                YouLose();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            //Axis wins BOT
-            if (arr2[0] == arr2[4] && arr2[4] == arr2[8] && arr2[8] == botChar)
-            {
-                arr2[0] = '#';
-                arr2[4] = '#';
-                arr2[8] = '#';
-
-                Print(arr2);
-                YouLose();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            if (arr2[2] == arr2[4] && arr2[4] == arr2[6] && arr2[6] == botChar)
-            {
-                arr2[2] = '#';
-                arr2[4] = '#';
-                arr2[6] = '#';
-
-                Print(arr2);
-                YouLose();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-            
-
-            //Draw
-            if (emptyCell == 0)
-            {
-                emptyCell = cells;
-                Draw();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            if (exit == 1)
-            {
-                break;
-            }
-            
-
-            cout << "Бот думает...\n";
-
-            do
-            {
-                botPlace = rand() % 9;
-            } while (arr2[botPlace] != ' ');
-            
-            
-
-            arr2[botPlace] = botChar;
-            emptyCell--;
-
-            
-
-            Print(arr2);
-
-
-            //Row wins USER
-            if (arr2[0] == arr2[1] && arr2[1] == arr2[2] && arr2[2] == userChar)
-            {
-                arr2[0] = '#';
-                arr2[1] = '#';
-                arr2[2] = '#';
-
-                Print(arr2);
-                YouWin();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            if (arr2[3] == arr2[4] && arr2[4] == arr2[5] && arr2[5] == userChar)
-            {
-                arr2[3] = '#';
-                arr2[4] = '#';
-                arr2[5] = '#';
-
-                Print(arr2);
-                YouWin();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            if (arr2[6] == arr2[7] && arr2[7] == arr2[8] && arr2[8] == userChar)
-            {
-                arr2[6] = '#';
-                arr2[7] = '#';
-                arr2[8] = '#';
-
-                Print(arr2);
-                YouWin();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            //Col wins USER
-            if (arr2[0] == arr2[3] && arr2[3] == arr2[6] && arr2[6] == userChar)
-            {
-                arr2[0] = '#';
-                arr2[3] = '#';
-                arr2[6] = '#';
-
-                Print(arr2);
-                YouWin();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            if (arr2[1] == arr2[4] && arr2[4] == arr2[7] && arr2[7] == userChar)
-            {
-                arr2[1] = '#';
-                arr2[4] = '#';
-                arr2[7] = '#';
-
-                Print(arr2);
-                YouWin();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            if (arr2[2] == arr2[5] && arr2[5] == arr2[8] && arr2[8] == userChar)
-            {
-                arr2[2] = '#';
-                arr2[5] = '#';
-                arr2[8] = '#';
-
-                Print(arr2);
-                YouWin();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            //Axis wins USER
-            if (arr2[0] == arr2[4] && arr2[4] == arr2[8] && arr2[8] == userChar)
-            {
-                arr2[0] = '#';
-                arr2[4] = '#';
-                arr2[8] = '#';
-
-                Print(arr2);
-                YouWin();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            if (arr2[2] == arr2[4] && arr2[4] == arr2[6] && arr2[6] == userChar)
-            {
-                arr2[2] = '#';
-                arr2[4] = '#';
-                arr2[6] = '#';
-
-                Print(arr2);
-                YouWin();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-
-
-
-            //Row wins BOT
-            if (arr2[0] == arr2[1] && arr2[1] == arr2[2] && arr2[2] == botChar)
-            {
-                arr2[0] = '#';
-                arr2[1] = '#';
-                arr2[2] = '#';
-
-                Print(arr2);
-                YouLose();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            if (arr2[3] == arr2[4] && arr2[4] == arr2[5] && arr2[5] == botChar)
-            {
-                arr2[3] = '#';
-                arr2[4] = '#';
-                arr2[5] = '#';
-
-                Print(arr2);
-                YouLose();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            if (arr2[6] == arr2[7] && arr2[7] == arr2[8] && arr2[8] == botChar)
-            {
-                arr2[6] = '#';
-                arr2[7] = '#';
-                arr2[8] = '#';
-
-                Print(arr2);
-                YouLose();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            //Col wins BOT
-            if (arr2[0] == arr2[3] && arr2[3] == arr2[6] && arr2[6] == botChar)
-            {
-                arr2[0] = '#';
-                arr2[3] = '#';
-                arr2[6] = '#';
-
-                Print(arr2);
-                YouLose();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            if (arr2[1] == arr2[4] && arr2[4] == arr2[7] && arr2[7] == botChar)
-            {
-                arr2[1] = '#';
-                arr2[4] = '#';
-                arr2[7] = '#';
-
-                Print(arr2);
-                YouLose();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            if (arr2[2] == arr2[5] && arr2[5] == arr2[8] && arr2[8] == botChar)
-            {
-                arr2[2] = '#';
-                arr2[5] = '#';
-                arr2[8] = '#';
-
-                Print(arr2);
-                YouLose();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            //Axis wins BOT
-            if (arr2[0] == arr2[4] && arr2[4] == arr2[8] && arr2[8] == botChar)
-            {
-                arr2[0] = '#';
-                arr2[4] = '#';
-                arr2[8] = '#';
-
-                Print(arr2);
-                YouLose();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-            if (arr2[2] == arr2[4] && arr2[4] == arr2[6] && arr2[6] == botChar)
-            {
-                arr2[2] = '#';
-                arr2[4] = '#';
-                arr2[6] = '#';
-
-                Print(arr2);
-                YouLose();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-            
-
-            //Draw
-            if (emptyCell == 0)
-            {
-                emptyCell = cells;
-                Draw();
-                EndOfRound(&exit, &round, &endOfRound);
-                continue;
-            }
-
-
-            
-            
-
-
-            cout << "\n";
-        } while (endOfRound != true);
-
-    } while (exit != true);
-    
+    A1.Play();
 
 }
