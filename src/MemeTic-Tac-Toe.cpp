@@ -3,6 +3,11 @@
 #include <chrono>
 #include <thread>
 
+#ifdef _WIN32
+    #include <windows.h>
+#endif
+
+
 using namespace std;
 
 class MemeTicTacToe
@@ -454,6 +459,12 @@ class MemeTicTacToe
 int main()
 {
     setlocale(LC_ALL, "en_US.UTF-8");
+
+#ifdef _WIN32
+    SetConsoleCP(CP_UTF8);
+    SetConsoleOutputCP(CP_UTF8);
+#endif
+
     srand(time(nullptr));
 
     MemeTicTacToe A1;
