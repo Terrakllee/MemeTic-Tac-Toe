@@ -1,36 +1,36 @@
-Игра: Мемные Крестики-Нолики / MemeTic-Tac-Toe
-Версия: v0.2-beta
-Разработчик: Terrakllee
+Game: MemeTic-Tac-Toe
+Version: v0.2-beta
+Developer: Terrakllee
 Github: https://github.com/Terrakllee
 
-Дата создания: 16 октября 2024
+Date of creation: 16th of October 2024
 
-Первая программа которую я выложил на GitHub, пусть и спустя долгое время с момента создания.
-Захотел оставить все так как и было при создании, тут много что можно обновить,
-улучшить и фиксить, но интересна сама история, как с чего все начинается.
+The first program I posted on GitHub, albeit a long time after it was created.
+I wanted to leave everything as it was when it was created. There is a lot that could be updated,
+improved, and fixed, but the story of how it all began is interesting in itself.
 
-*Как запустить
-Если у вас Windows, то два раза нажмите на файл MemeTiс-Taс-Toe.exe
-Откроется консоль CMD, вам нужно будет поменять шрифт в консоли на "Cascadia Code"
-чтобы ASCII картинки отображались корректно. 
-Для этого в открывшейся в консоле кликаете по верхней грани консоли ПКМ,
-затем нажимаете Properties (Свойства), потом ищете шрифт "Cascadia Code"
-он обычно выше остальных шрифтов, выбираете его и жмете "Ок".
-Более детально смотрите по скриншотам.
+*How to launch
+If you are using Windows, double-click on the MemeTiс-Taс-Toe.exe file.
+The CMD console will open, and you will need to change the font in the console to “Cascadia Code”
+so that ASCII images are displayed correctly. 
+To do this, right-click on the top edge of the console that opened,
+then click Properties, then look for the font “Cascadia Code.”
+It is usually above the other fonts. Select it and click “Ok.”
+See the screenshots for more details.
 
 P.S.
-Я не несу ответсвенности за ваше устройство при использовании данной программы, 
-так что если ваш комп взорвётся, то я не виноват :>
+I am not responsible for your device when using this program, 
+so if your computer explodes, it's not my fault :>
 
 UPD
-Если что программу всегда можно закрыть через диспетчер задач или закрыв окно.
-(Нет, это не вирус, это просто обычные крестики нолики... или нет? :> )
+If anything, you can always close the program via the task manager or by closing the window.
+(No, it's not a virus, it's just a regular tic-tac-toe game... or is it? :> )
 
 UPD 2
-Иногда Windows может жаловаться что тут якобы вирус, но это не так,
-весь исходный код есть на GitHub
+Sometimes Windows may complain that there is supposedly a virus here, but this is not truth.
+All source code is available in src folder.
 
-Коды от ядерки: JGPa-5AgQ-83K9-M1J&
+Nuke codes: JGPa-5AgQ-83K9-M1J&
 
 ⠀⠀⠀⣀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⡤⣄⡀⠀
 ⠶⡿⠟⠛⠛⠛⠛⠛⠿⠷⠶⡶⠦⠀⠀⠀⠻⢶⡶⠿⠿⠟⠛⠛⠛⠛⠷⢿⠲

@@ -37,8 +37,8 @@ class MemeTicTacToe
 
     void Greetings()
     {
-        cout << "##### Мемные Крестики-Нолики #####\n";
-        cout << "Разработчик: Terrakllee\n\n";
+        cout << "##### MemeTic-Tac-Toe #####\n";
+        cout << "Developer: Terrakllee\n\n";
     }
 
     void Print()
@@ -62,8 +62,8 @@ class MemeTicTacToe
             grid[i] = ' ';
         }
 
-        cout << "Раунд № " << round << "\n";
-        cout << " *Если вы хотите играть за X введите цифру 1 \n *Если вы хотите играть за O введите цифру 0\n *Ваш ввод: ";
+        cout << "Round № " << round << "\n";
+        cout << " *If you want to play as X type 1 \n *If you want to play as O type 0\n *Enter: ";
 
         do
         {
@@ -89,7 +89,7 @@ class MemeTicTacToe
 
     void UserTurn()
     {
-        cout << "Ваш ход: ";
+        cout << "Your turn: ";
 
         do
         {
@@ -104,7 +104,7 @@ class MemeTicTacToe
 
     void BotTurn()
     {
-        cout << "Бот думает.";
+        cout << "Bot is thinking.";
         cout.flush();
         this_thread::sleep_for(chrono::seconds(1));
         cout << ".";
@@ -127,7 +127,7 @@ class MemeTicTacToe
     void EndOfRound(bool *exit, short *round, bool *endOfRound) 
     {
         emptyCells = cells;
-        cout << " *Если хотите выйти из игры введите цифру 1\n *Если хотите ещё раунд введите цифру 0\n *Ваш ввод: ";
+        cout << " *If you want to exit the game, type 1\n *If you want one more round, type 0\n *Enter: ";
         cin >> *exit;
 
         if (*exit != 1)
@@ -139,7 +139,7 @@ class MemeTicTacToe
 
     void YouWin()
     {
-        cout << "Поздравляю! Ты Выиграл!!! :D\n\n\n";
+        cout << "Congratulations! You Won!!! :D\n\n\n";
         cout << "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣤⣤⣤⣤⣤⣶⣦⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀ \n";
         cout << "⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⡿⠛⠉⠙⠛⠛⠛⠛⠻⢿⣿⣷⣤⡀⠀⠀⠀⠀⠀ \n";
         cout << "⠀⠀⠀⠀⠀⠀⠀⠀⣼⣿⠋⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⠈⢻⣿⣿⡄⠀⠀⠀⠀ \n";
@@ -164,7 +164,7 @@ class MemeTicTacToe
 
     void YouLose()
     {
-        cout << "Ты проиграл! :<\n\n\n";
+        cout << "You Lose! :<\n\n\n";
         cout << "⡴⠒⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⠉⠳⡆⠀\n";
         cout << "⣇⠰⠉⢙⡄⠀⠀⣴⠖⢦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣆⠁⠙⡆\n";
         cout << "⠘⡇⢠⠞⠉⠙⣾⠃⢀⡼⠀⠀⠀⠀⠀⠀⠀⢀⣼⡀⠄⢷⣄⣀⠀⠀⠀⠀⠀⠀⠀⠰⠒⠲⡄⠀⣏⣆⣀⡍\n";
@@ -184,7 +184,7 @@ class MemeTicTacToe
 
     void Draw()
     {
-        cout << "Ничья! :/\n\n\n";
+        cout << "Draw! :/\n\n\n";
         cout << "⠀⠀⠀⣀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⡤⣄⡀⠀\n";
         cout << "⠶⡿⠟⠛⠛⠛⠛⠛⠿⠷⠶⡶⠦⠀⠀⠀⠻⢶⡶⠿⠿⠟⠛⠛⠛⠛⠷⢿⠲\n";
         cout << "⠀⠀⠀⢀⡠⢮⣭⣭⣼⣏⡓⢦⠀⠀⠀⠀⢀⡴⢛⣻⣿⣽⣿⡷⠤⣀⠀⠀⠈\n";
@@ -453,7 +453,7 @@ class MemeTicTacToe
 
 int main()
 {
-    setlocale(LC_ALL, "ru_RU.UTF-8");
+    setlocale(LC_ALL, "en_US.UTF-8");
     srand(time(nullptr));
 
     MemeTicTacToe A1;
